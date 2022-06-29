@@ -1,5 +1,5 @@
 This project creates XML-files from special text files.
-THe text-files describes people and each line
+The text-files describes people and each line
 begins with P, T, A or F.
 Person, Telephone, Address or Family.
 

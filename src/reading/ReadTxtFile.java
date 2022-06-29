@@ -10,7 +10,7 @@ import javax.xml.parsers.*;
 /**
  * Read text file, interpret the contents and create an XML file based on it.
  *
- * @author Jimmy  Quaresmini
+ * @author Jimmy Quaresmini
  */
 public class ReadTxtFile {
     BufferedReader readFile;
@@ -35,7 +35,9 @@ public class ReadTxtFile {
             System.out.println("File " + filename + " was not found. Quitting.");
             System.exit(0);
         } catch (ParserConfigurationException parserConfigurationException) {
-            System.out.println("Problem parsing document: " + parserConfigurationException.getMessage());
+            System.out.println("Problem creating DocumentBuilder object: "
+                    + parserConfigurationException + ". Quitting.");
+            System.exit(0);
         }
 
         readLinesFromFile();
@@ -58,7 +60,7 @@ public class ReadTxtFile {
             try {
                 fileLine = readFile.readLine();
             } catch (IOException ioException) {
-                System.out.println("Problem reading the file: " + ioException.getMessage());
+                System.out.println("Problem reading the file: " + ioException.getMessage() + ". Quitting.");
                 System.exit(0);
             }
 
@@ -112,22 +114,17 @@ public class ReadTxtFile {
                     Element city = document.createElement("city");
                     city.appendChild(document.createTextNode(linesText[2]));
                     address.appendChild(city);
-                    if (familyXMLbegun == true) {
-                        if (linesText.length == 4) {
-                            Element zip = document.createElement("zip");
-                            zip.appendChild(document.createTextNode(linesText[3]));
-                            address.appendChild(zip);
-                        }
 
+                    if (linesText.length == 4) {
+                        Element zip = document.createElement("zip");
+                        zip.appendChild(document.createTextNode(linesText[3]));
+                        address.appendChild(zip);
+                    }
+
+                    if (familyXMLbegun == true) {
                         family.appendChild(address);
                     }
                     else {
-                        if (linesText.length == 4) {
-                            Element zip = document.createElement("zip");
-                            zip.appendChild(document.createTextNode(linesText[3]));
-                            address.appendChild(zip);
-                        }
-
                         person.appendChild(address);
                     }
                     break;
